@@ -1,33 +1,3 @@
-/*
- -declare variables:
-  .array of question objects, each object has 4 properties: name, question, options, answer
-  .intervalID
-  .time=120 (time remaining: 2 minutes)
-  .correctNum=0
-  .incorrectNum=0
-  .unansweredNum=0
-
- -count function
-
- -when user clicks Start button:
-  .in elementId "game", replace Start button with below:
-   ..display "Time Remaining: 02:00"
-   ..display questions in form
-   ..display Done button
-  .start interval to run count function every 1 second 
-
- -When user clicks Done button or when time runs out, game over:
-  .clear interval
-  .get user's selection and calculate the result:
-   ..if no selection, unansweredNum++
-   ..if there is a selection, compare with the question's answer
-     ...if correct, correctNum++
-     ...else, incorrectNum++
-  .in elementId "game", replace everything with below:
-   ..display "All Done!"
-   ..display correctNum, incorrectNum and unansweredNum
-*/
-
 var questions = [
     {
         name: "married",
@@ -50,71 +20,122 @@ var questions = [
 ];
 
 var intervalID;
-var time = 120;
+var time = 20;  // 20 seconds for answering each question
 var correctNum = 0;
 var incorrectNum = 0;
 var unansweredNum = 0;
+var index = 0;  // track which question to display
 
 
+$("#start").click(displayQuestion);
+
+
+function displayQuestion() {
+
+    // remove all emlements inside elementId "game"
+    $("#game").empty();
+
+    // create new element to display time remaining
+    var timeEle = $("<h2>");
+    timeEle.text("Time Remaining: 00:20");
+
+    // create new element to display a question and its options
+    var formEle = $("<form>");
+
+    formEle.append("<label>" + questions[index].question + "</label><br><br>");
+
+    for (var j = 0; j < questions[index].options.length; j++) {
+        formEle.append("<label><input type='radio' name='" + questions[index].name + "' value='" +
+            questions[index].options[j] + "'>" + questions[index].options[j] + "  </label>");
+    }
+
+    // append new elements to elementId "game"
+    $("#game").append(timeEle, formEle);
+
+    // start counting down
+    intervalID = setInterval(count, 1000);
+
+    // if user selects an option, display result for the question
+    $("input[name='" + questions[index].name + "']").click(displayResult);
+}
+
+
+// function count to update time remaining
 function count() {
+
     time--;
     var currentTime = timeConverter(time);
-    $("#time").text("Time Remaining: " + currentTime);
+    $("h2").text("Time Remaining: " + currentTime);
 
+    // if time runs out, display result for the question
     if (time === 0) {
-        gameOver();
+        displayResult();
     }
 }
 
 
-$("#start").click(function () {
+function displayResult() {
 
-    $("#start").remove();
+    // stop counting down
+    clearInterval(intervalID);
+    // reset time
+    time = 20;
 
-    $("#time").text("Time Remaining: 02:00");
+    // get user's selection
+    var userValue = $("input[name='" + questions[index].name + "']:checked").val();
 
-    for (var i = 0; i < questions.length; i++) {
-        $("form").append("<label>" + questions[i].question + "</label><br>");
-
-        for (var j = 0; j < questions[i].options.length; j++) {
-            $("form").append("<label><input type='radio' name='" + questions[i].name + "' value='" +
-                questions[i].options[j] + "'>" + questions[i].options[j] + "  </label>");
-        }
-
-        $("form").append("<br><br>");
+    if (!userValue) { // if user didn't select any option, which means time runs out
+        unansweredNum++;
+        $("#game").html("<br><h2>Out of Time!<br><br>Correct answer is: " + questions[index].answer +
+            "</h2>");
+    } else if (userValue === questions[index].answer) { // if user is correct
+        correctNum++;
+        $("#game").html("<br><h2>Correct!</h2>");
+    } else { // if user is wrong
+        incorrectNum++;
+        $("#game").html("<br><h2>Nope!<br><br>Correct answer is: " + questions[index].answer +
+            "</h2>");
     }
 
-    $("#game").append("<button id='done'>Done</button>");
-    $("#done").click(gameOver);
+    // increase index to go to next question
+    index++;
 
-    intervalID = setInterval(count, 1000);
-
-});
+    if (index === questions.length) { // if no more question
+        setTimeout(gameOver, 3000); // call gameOver function to display final result after 3 seconds
+    } else { // if there are more questions
+        setTimeout(displayQuestion, 3000); // display next question after 3 seconds
+    }
+}
 
 
 function gameOver() {
 
-    clearInterval(intervalID);
-
-    for (var i = 0; i < questions.length; i++) {
-        var userValue = $("input[name='" + questions[i].name + "']:checked").val();
-
-        if (!userValue) { 
-            unansweredNum++; }
-        else if (userValue === questions[i].answer) { 
-            correctNum++; }
-        else { 
-            incorrectNum++; }
-    }
-
+    // display final result and "Start Over" button
     $("#game").html("<br><h2>All Done!<br><br>Correct Answers: " + correctNum +
         "<br>Incorrect Answers: " + incorrectNum + "<br>Unanswered: " + unansweredNum +
-        "</h2>");
+        "</h2><button id='start-over'>Start Over ?</button>");
+
+    // if user clicks "Start Over" button, call startOver function
+    $("#start-over").click(startOver);
 }
 
 
+function startOver() {
+
+    // reset all variables
+    correctNum = 0;
+    incorrectNum = 0;
+    unansweredNum = 0;
+    index = 0;
+
+    // display first question
+    displayQuestion();
+}
+
+
+//  function that takes the current time in seconds and convert it to minutes and seconds (mm:ss)
 function timeConverter(t) {
-    //  Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
+
     var minutes = Math.floor(t / 60);
     var seconds = t - (minutes * 60);
 
