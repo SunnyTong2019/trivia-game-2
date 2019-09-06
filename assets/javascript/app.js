@@ -1,21 +1,39 @@
 var questions = [
     {
-        name: "married",
-        question: "Where did Ross and Rachel get married?",
-        options: ["Atlantic City", "Las Vegas"],
-        answer: "Las Vegas"
+        name: "Ross",
+        question: "How many times did Ross get married?",
+        options: ["Four", "One", "Three", "None"],
+        answer: "Three"
     },
     {
-        name: "penguin",
-        question: "What is the name of Joey's stuffed penguin?",
-        options: ["Alisha May", "Hugsy"],
-        answer: "Hugsy"
+        name: "Phoebe",
+        question: "Phoebe's brother let her name one of his triplets. What did she name her?",
+        options: ["Josephine", "Chandler", "Katherine", "Emma"],
+        answer: "Chandler"
     },
     {
-        name: "middle name",
-        question: "What is Chandler's middle name?",
-        options: ["Marcel", "Muriel"],
-        answer: "Muriel"
+        name: "Monica",
+        question: "What did Monica make when she was trying to get over Richard?",
+        options: ["Honey", "Jam", "A loud noise", "Candy"],
+        answer: "Jam"
+    },
+    {
+        name: "Joey",
+        question: "What soap opera does Joey act on as 'Dr. Drake Remoray'?",
+        options: ["All My Children", "General Hospital", "As the World Turns", "Days of Our Lives"],
+        answer: "Days of Our Lives"
+    },
+    {
+        name: "Rachel",
+        question: "What was Rachel going to marry but left at the altar?",
+        options: ["Barry", "Jim", "Ross", "George"],
+        answer: "Barry"
+    },
+    {
+        name: "Chandler",
+        question: "What was the name of Chandler's annoying ex-girlfriend?",
+        options: ["Lucy", "Pamela", "Janice", "Elizabeth"],
+        answer: "Janice" 
     }
 ];
 
