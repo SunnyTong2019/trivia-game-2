@@ -2,7 +2,7 @@ body {
     background: url(../images/friends.png) no-repeat center center fixed;
     background-size: cover;
     text-align: center;
-    font-size: 16px;
+    font-size: 19px;
 }
 
 h1 {
@@ -17,14 +17,15 @@ h1 {
     padding-left: 30px;
     padding-right: 30px;
     padding-bottom: 80px;
+    height: 350px;
 }
 
 #game {
-    margin-top: 30px;   
+    margin-top: 30px;
 }
 
-button {
-    margin-top: 30px;    
+button { 
+    margin-top: 30px;
     width: 150px;
     height: 50px;
     font-size: 20px;
