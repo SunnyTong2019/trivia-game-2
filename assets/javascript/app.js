@@ -104,14 +104,14 @@ function displayResult() {
 
     if (!userValue) { // if user didn't select any option, which means time runs out
         unansweredNum++;
-        $("#game").html("<br><h2>Out of Time!</h2><br><br><p>The Correct Answer was: " + questions[index].answer +
+        $("#game").html("<br><h2>Out of Time!</h2><br><p>The Correct Answer was: " + questions[index].answer +
             "</p>");
     } else if (userValue === questions[index].answer) { // if user is correct
         correctNum++;
         $("#game").html("<br><h2>Correct!</h2>");
     } else { // if user is wrong
         incorrectNum++;
-        $("#game").html("<br><h2>Nope!</h2><br><br><p>The Correct Answer was: " + questions[index].answer +
+        $("#game").html("<br><h2>Nope!</h2><br><p>The Correct Answer was: " + questions[index].answer +
             "</p>");
     }
 
@@ -129,7 +129,7 @@ function displayResult() {
 function gameOver() {
 
     // display final result and "Start Over" button
-    $("#game").html("<br><h2>All done, here's how you did!</h2><p>Correct Answers: " + correctNum +
+    $("#game").html("<h2>All done, here's how you did!</h2><p>Correct Answers: " + correctNum +
         "<br>Incorrect Answers: " + incorrectNum + "<br>Unanswered: " + unansweredNum +
         "</p><button id='start-over'>Start Over?</button>");
 
