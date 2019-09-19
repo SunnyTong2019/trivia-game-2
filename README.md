@@ -9,6 +9,10 @@
 
 * On the final screen, it will show the number of correct answers, incorrect answers, not answered and an option to restart the game.
 
+* The app is deployed at: https://sunnytong2019.github.io/trivia-game-2/
+
+
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
